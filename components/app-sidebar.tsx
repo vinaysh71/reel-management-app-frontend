@@ -9,9 +9,15 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
-} from "@/components/ui/sidebar"
-import { FileStack, Layers, LayoutDashboard, Package, Settings } from "lucide-react"
-import { AppSidebarLink } from "./ui/app-sidebar-link"
+} from "@/components/ui/sidebar";
+import {
+  FileStack,
+  Layers,
+  LayoutDashboard,
+  Package,
+  Settings,
+} from "lucide-react";
+import { AppSidebarLink } from "./app-sidebar-link";
 
 // Menu items.
 const items = [
@@ -40,7 +46,7 @@ const items = [
     url: "#",
     icon: Settings,
   },
-] 
+];
 
 export function AppSidebar() {
   return (
@@ -51,25 +57,17 @@ export function AppSidebar() {
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (
-              <AppSidebarLink
-                key={item.url}
-                href={item.url}
-                label={item.title}
-                icon={item.icon}
-              />
-                // <SidebarMenuItem key={item.title}>
-                //   <SidebarMenuButton asChild>
-                //     <a href={item.url}>
-                //       <item.icon />
-                //       <span>{item.title}</span>
-                //     </a>
-                //   </SidebarMenuButton>
-                // </SidebarMenuItem>
+                <AppSidebarLink
+                  key={item.title}
+                  href={item.url}
+                  label={item.title}
+                  icon={item.icon}
+                />
               ))}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
     </Sidebar>
-  )
+  );
 }
