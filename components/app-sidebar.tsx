@@ -1,7 +1,3 @@
-import * as React from "react"
-
-import { SearchForm } from "@/components/search-form"
-import { VersionSwitcher } from "@/components/version-switcher"
 import {
   Sidebar,
   SidebarContent,
@@ -15,6 +11,7 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar"
 import { FileStack, Layers, LayoutDashboard, Package, Settings } from "lucide-react"
+import { AppSidebarLink } from "./ui/app-sidebar-link"
 
 // Menu items.
 const items = [
@@ -54,14 +51,20 @@ export function AppSidebar() {
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <a href={item.url}>
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
+              <AppSidebarLink
+                key={item.url}
+                href={item.url}
+                label={item.title}
+                icon={item.icon}
+              />
+                // <SidebarMenuItem key={item.title}>
+                //   <SidebarMenuButton asChild>
+                //     <a href={item.url}>
+                //       <item.icon />
+                //       <span>{item.title}</span>
+                //     </a>
+                //   </SidebarMenuButton>
+                // </SidebarMenuItem>
               ))}
             </SidebarMenu>
           </SidebarGroupContent>
