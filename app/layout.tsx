@@ -2,14 +2,17 @@
 import "./globals.css";
 import { ReactNode } from "react";
 import Sidebar from "./components/side-bar";
+import { ThemeProvider } from "./components/theme-provider";
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
     <body>
+      <ThemeProvider>
       <Sidebar>
         {children}
-      </Sidebar> 
+      </Sidebar>
+      </ThemeProvider>
       </body>
     </html>
   );

@@ -15,7 +15,7 @@ export function HeaderActions() {
 
   if (!mounted) return null;
 
-  const isDark = (resolvedTheme ?? theme) === "dark";
+  const isDark = resolvedTheme === "dark";
 
   const toggleTheme = () => {
     setTheme(isDark ? "light" : "dark");
@@ -30,11 +30,11 @@ export function HeaderActions() {
         aria-label="Toggle theme"
         onClick={toggleTheme}
       >
-        {/* When theme is light (or system-light), show Sun */}
-        <Sun className="h-5 w-5 dark:hidden" />
-
-        {/* When theme is dark, show Moon */}
-        <Moon className="h-5 w-5 hidden dark:block" />
+        {isDark ? (
+          <Sun className="h-5 w-5" /> // currently dark → show Sun (go light)
+        ) : (
+          <Moon className="h-5 w-5" /> // currently light → show Moon (go dark)
+        )}
       </Button>
 
       <Button
