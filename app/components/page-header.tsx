@@ -1,3 +1,5 @@
+"use client"
+
 import { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -30,14 +32,14 @@ export default function PageHeader({
   return (
     <header className={cn("flex flex-col", className)}>
       <div className="flex items-center justify-between gap-3 p-5">
-        <div className="space-y-1">
+        <div className="space-y-1 px-6">
           <h1 className="text-xl font-semibold tracking-tight">{title}</h1>
           {description ? (
             <p className="text-sm text-muted-foreground">{description}</p>
           ) : null}
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 px-6">
           {children}
           {primaryAction ? (
             primaryAction.href ? (
