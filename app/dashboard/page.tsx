@@ -125,7 +125,7 @@ export default function Page() {
         <div className="w-1/5">
           <Card className="mt-2 p-6 rounded-xl">
             <CardTitle>Low stock reels</CardTitle>
-            <div className="flex flex-col">
+            <div className="flex flex-col items-end">
               {LowStockReels.map(({ id, name, stock }) => (
                 <div
                   key={id}
