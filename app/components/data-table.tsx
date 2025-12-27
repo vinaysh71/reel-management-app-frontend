@@ -73,7 +73,7 @@ export function DataTable<TData, TValue>({
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [pagination, setPagination] = useState({
     pageIndex: 0,
-    pageSize: properties?.pageSize || 10, // Customizable
+    pageSize: properties?.pageSize || 10,
   });
 
   const pageSizeOptions = properties?.pageSizeOptions || [10, 20, 50, 100];
@@ -106,7 +106,7 @@ export function DataTable<TData, TValue>({
       {/* TOOLBAR */}
       <div className="flex items-center gap-3 py-4 px-4 bg-gray-50/50 dark:bg-gray-900/50 rounded-t-lg">
         {/* SEARCH */}
-        <div className="w-full max-w-sm">
+        <div>
           {properties?.isSearchable && (
             <input
               placeholder="Search reels..."
