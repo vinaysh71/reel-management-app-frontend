@@ -239,7 +239,7 @@ export function DataTable<TData, TValue>({
       </Table>
 
       {/* PAGINATION */}
-      {properties?.showPagination && (
+      {properties?.showPagination && table.getRowModel().rows?.length && (
         <div className="flex items-center justify-between px-4 py-3 border-t">
           <div className="text-sm text-muted-foreground">
             Page {table.getState().pagination.pageIndex + 1} of{" "}

@@ -92,12 +92,7 @@ export const recentConsumptionData: ConsumptionEntry[] = [
 export default function Page() {
   return (
     <>
-      <PageHeader
-        title="Dashboard"
-        primaryAction={{
-          label: "Add Reel",
-        }}
-      >
+      <PageHeader title="Dashboard">
         <HeaderActions />
       </PageHeader>
       <div className="flex flex-row gap-4 p-10">
