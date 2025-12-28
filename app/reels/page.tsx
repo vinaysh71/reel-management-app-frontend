@@ -1,7 +1,5 @@
-import PageHeader from "../components/page-header";
+import { ReelsClient } from "./reel-client";
 
 export default function Page() {
-  return (
-    <PageHeader title="Reels" />
-  ) 
+  return <ReelsClient />;
 }

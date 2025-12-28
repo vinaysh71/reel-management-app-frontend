@@ -92,12 +92,7 @@ export const recentConsumptionData: ConsumptionEntry[] = [
 export default function Page() {
   return (
     <>
-      <PageHeader
-        title="Dashboard"
-        primaryAction={{
-          label: "Add Reel",
-        }}
-      >
+      <PageHeader title="Dashboard">
         <HeaderActions />
       </PageHeader>
       <div className="flex flex-row gap-4 p-10">
@@ -125,7 +120,7 @@ export default function Page() {
         <div className="w-1/5">
           <Card className="mt-2 p-6 rounded-xl">
             <CardTitle>Low stock reels</CardTitle>
-            <div className="flex flex-col">
+            <div className="flex flex-col items-end">
               {LowStockReels.map(({ id, name, stock }) => (
                 <div
                   key={id}
