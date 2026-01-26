@@ -9,6 +9,7 @@ import {
 export default async function DashboardStats() {
   const data = await getDashboardKpis();
   const stats = buildDashboardStats(data);
+
   return (
     <>
       {stats.map(({ label, value, icon }) => (

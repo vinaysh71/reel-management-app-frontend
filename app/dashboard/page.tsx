@@ -1,18 +1,9 @@
 import PageHeader from "../components/page-header";
 import { Layers, Activity, TrendingUp, TriangleAlert } from "lucide-react";
-import { Card, CardContent, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { DataTable } from "../components/data-table";
-import { ColumnDef } from "@tanstack/react-table";
 import { HeaderActions } from "../components/header-actions";
-import { StatCard } from "../components/stat-card";
 import DashboardStats from "../components/dashboard/dashboard-stats";
 import { Suspense } from "react";
 import ConsumptionTable from "../components/dashboard/consumption-table";
-import { get } from "http";
-import { getDashboardData } from "@/lib/dashboard/dashboard.api";
-import build from "next/dist/build";
-import { buildDashboardStats } from "@/lib/dashboard/buildDashboardStats";
 import LowStockCard from "../components/dashboard/low-stock.card";
 
 const DashboardStats1 = [
@@ -59,7 +50,10 @@ export default async function Page() {
           </div> */}
         </div>
         <div className="w-1/5">
-          <LowStockCard />
+          <Suspense fallback={<div>Loading low stock reels...</div>}>
+            <LowStockCard />
+          </Suspense>
+
           {/* <Card className="mt-2 p-6 rounded-xl">
             <CardTitle>Low stock reels</CardTitle>
             <div className="flex flex-col items-end">
