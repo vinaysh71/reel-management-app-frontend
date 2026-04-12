@@ -11,6 +11,7 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar";
 import {
+  Building2,
   FileStack,
   Layers,
   LayoutDashboard,
@@ -35,6 +36,11 @@ const items = [
     title: "Orders",
     url: "#",
     icon: FileStack,
+  },
+  {
+    title: "Suppliers",
+    url: "#",
+    icon: Building2,
   },
   {
     title: "Usage",
