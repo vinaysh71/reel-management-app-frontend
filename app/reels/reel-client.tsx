@@ -6,9 +6,14 @@ import PageHeader from "../components/page-header";
 import { DataTable } from "../components/data-table";
 import { HeaderActions } from "../components/header-actions";
 import { AddReelDialog } from "./add-reel-dialog";
-import { reelsColumns, reelsData } from "./columns";
+import { reelsColumns } from "./columns";
+import { Reel } from "@/lib/reel/reel.types";
 
-export function ReelsClient() {
+type ReelClientProps = {
+  reelsData: Reel[];
+};
+
+export function ReelsClient({ reelsData }: ReelClientProps) {
   const [isAddReelOpen, setIsAddReelOpen] = useState(false);
 
   return (

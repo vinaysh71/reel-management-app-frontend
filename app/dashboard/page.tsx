@@ -6,13 +6,6 @@ import { Suspense } from "react";
 import ConsumptionTable from "../components/dashboard/consumption-table";
 import LowStockCard from "../components/dashboard/low-stock.card";
 
-const DashboardStats1 = [
-  { label: "Total Reels", value: 12, icon: Layers },
-  { label: "In use", value: 345, icon: Activity },
-  { label: "Consumed today", value: 89, icon: TrendingUp },
-  { label: "Low Stock", value: 120, icon: TriangleAlert },
-];
-
 // const LowStockReels = [
 //   { id: "R001", name: "Reel A", stock: "5kg" },
 //   { id: "R002", name: "Reel B", stock: "3kg" },
