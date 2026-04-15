@@ -1,9 +1,11 @@
+import { Supplier } from "../supplier/supplier.types";
+
 export type ReelStatus = 'Available' | 'In Use' | 'Consumed' | 'Damaged';
 
 export type Reel = {
   id: number;
   reelNo: string;
-  supplierId: string;
+  supplier: Supplier;
   gsm: number;
   ply: number;
   grossWeight: number;

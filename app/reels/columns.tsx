@@ -1,10 +1,11 @@
 "use client";
 
+import { Supplier } from "@/lib/supplier/supplier.types";
 import { ColumnDef } from "@tanstack/react-table";
 
 export interface ReelColumns {
   reelNo: string;
-  supplierId: string;
+  supplier: Supplier;
   gsm: number;
   ply: number;
   grossWeight: number;
@@ -20,13 +21,14 @@ export const reelsColumns: ColumnDef<ReelColumns>[] = [
     header: "Reel No",
   },
   {
-    accessorKey: "supplierId",
+    id: "supplier",
+    accessorFn: (row) => row.supplier?.name,
     header: "Supplier",
     meta: {
-      filterable: true, // dynamic dropdown filter
+      filterable: true,
     },
     cell: ({ row }) => (
-      <span className="font-medium">{row.getValue("supplierId")}</span>
+      <span className="font-medium">{row.original.supplier?.name}</span>
     ),
   },
   {

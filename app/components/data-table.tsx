@@ -39,6 +39,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Supplier } from "@/lib/supplier/supplier.types";
 
 declare module "@tanstack/table-core" {
   interface ColumnMeta<TData extends RowData, TValue> {
@@ -148,11 +149,24 @@ export function DataTable<TData, TValue>({
                       <SelectItem value="__all__">All</SelectItem>
                       {Array.from(column.getFacetedUniqueValues()?.keys() || [])
                         .slice(0, 10)
-                        .map((key) => (
-                          <SelectItem key={key as string} value={key as string}>
-                            {key as string}
-                          </SelectItem>
-                        ))}
+                        .map((key) => {
+                          let value: string;
+                          if (typeof key === "object" && key !== null) {
+                            value = key.id?.toString() ?? JSON.stringify(key);
+                          } else {
+                            value = String(key);
+                          }
+                          return (
+                            <SelectItem
+                              key={`${value}-${column.id}`}
+                              value={value}
+                            >
+                              {typeof key === "object" && key !== null
+                                ? key.name || value
+                                : value}
+                            </SelectItem>
+                          );
+                        })}
                     </SelectContent>
                   </Select>
                 </div>
@@ -192,7 +206,7 @@ export function DataTable<TData, TValue>({
                     >
                       {column.id}
                     </DropdownMenuCheckboxItem>
-                  )
+                  ),
               )}
             </DropdownMenuContent>
           </DropdownMenu>
@@ -210,7 +224,7 @@ export function DataTable<TData, TValue>({
                     ? null
                     : flexRender(
                         header.column.columnDef.header,
-                        header.getContext()
+                        header.getContext(),
                       )}
                 </TableHead>
               ))}
