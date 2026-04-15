@@ -13,7 +13,6 @@ export async function getDashboardData(): Promise<DashboardData> {
     throw new Error("Failed to fetch dashboard data");
   }
   const data = await res.json();
-  await new Promise((resolve) => setTimeout(resolve, 5000)); // Simulate network delay
   cachedData = data;
   return data;
 }
