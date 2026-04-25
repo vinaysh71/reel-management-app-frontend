@@ -19,6 +19,12 @@ export const reelsColumns: ColumnDef<ReelColumns>[] = [
   {
     accessorKey: "reelNo",
     header: "Reel No",
+    meta: {
+      filterable: true,
+    },
+    cell: ({ row }) => (
+      <span className="font-medium">{row.getValue("reelNo")}</span>
+    ),
   },
   {
     id: "supplier",

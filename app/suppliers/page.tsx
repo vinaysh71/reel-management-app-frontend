@@ -1,15 +1,13 @@
-import { Reel } from "@/lib/reel/reel.types";
-import { ReelsClient } from "./reel-client";
-import { getReelsData } from "@/lib/reel/reel.api";
+import { Supplier } from "@/lib/supplier/supplier.types";
 import { Suspense } from "react";
 import { ReelsTableSkeleton } from "../components/table-skeleton";
-import { ReelServer } from "./reel-server";
+import { SupplierServer } from "./supplier-server";
 
 export default function Page() {
   return (
     <>
       <Suspense fallback={<ReelsTableSkeleton />}>
-        <ReelServer />
+        <SupplierServer />
       </Suspense>
     </>
   );

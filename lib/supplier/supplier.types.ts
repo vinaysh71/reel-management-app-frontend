@@ -5,6 +5,6 @@ export type Supplier = {
     email: string;
     phone: string;
   };
-  gstin: string;
+  gstIn: string;
   address: string;
 };

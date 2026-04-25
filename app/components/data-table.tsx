@@ -103,7 +103,7 @@ export function DataTable<TData, TValue>({
   });
 
   return (
-    <div className="rounded-md border">
+    <div className="w-full rounded-md border">
       {/* TOOLBAR */}
       <div className="flex items-center gap-3 py-4 px-4 bg-gray-50/50 dark:bg-gray-900/50 rounded-t-lg">
         {/* SEARCH */}

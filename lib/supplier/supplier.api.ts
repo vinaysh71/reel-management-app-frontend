@@ -16,6 +16,6 @@ export async function getAllSuppliers(): Promise<Supplier[]> {
         throw new Error("Failed to fetch suppliers data");
     }
     const data = await res.json();
-    cachedSuppliers
-    return await data;
+    cachedSuppliers = data;
+    return data;
 }
