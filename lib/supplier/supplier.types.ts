@@ -5,6 +5,17 @@ export type Supplier = {
     email: string;
     phone: string;
   };
-  gstin: string;
+  gstIn: string;
   address: string;
+};
+
+export type ContactInfo = {
+  email?: string;
+  phone: string;
+};
+
+export type CreateSupplierRequest = {
+  name: string;
+  contact: ContactInfo;
+  gstIn?: string;
 };

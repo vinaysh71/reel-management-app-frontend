@@ -33,14 +33,14 @@ const items = [
     icon: Layers,
   },
   {
+    title: "Suppliers",
+    url: "/suppliers",
+    icon: Building2,
+  },
+  {
     title: "Orders",
     url: "#",
     icon: FileStack,
-  },
-  {
-    title: "Suppliers",
-    url: "#",
-    icon: Building2,
   },
   {
     title: "Usage",
