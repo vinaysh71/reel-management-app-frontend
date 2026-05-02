@@ -8,3 +8,14 @@ export type Supplier = {
   gstIn: string;
   address: string;
 };
+
+export type ContactInfo = {
+  email?: string;
+  phone: string;
+};
+
+export type CreateSupplierRequest = {
+  name: string;
+  contact: ContactInfo;
+  gstIn?: string;
+};

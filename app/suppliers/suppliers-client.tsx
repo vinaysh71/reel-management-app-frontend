@@ -7,6 +7,7 @@ import { DataTable } from "../components/data-table";
 import { supplierColumns } from "./columns";
 import { Supplier } from "@/lib/supplier/supplier.types";
 import { AddSupplierDialog } from "./add-supplier.dialog";
+import { getAllSuppliers } from "@/lib/supplier/supplier.api";
 
 type SuppliersClientProps = {
   suppliersData: Supplier[];
@@ -14,6 +15,14 @@ type SuppliersClientProps = {
 
 export function SuppliersClient({ suppliersData }: SuppliersClientProps) {
   const [isAddSupplierOpen, setIsAddSupplierOpen] = useState(false);
+  const [suppliers, setSuppliers] = useState<Supplier[]>(suppliersData);
+
+  const refreshSuppliersData = async () => {
+    // You can implement a function in your API layer to fetch the latest suppliers data
+    // For example, if you have a function called getAllSuppliers, you can call it here:
+    const updatedSuppliers = await getAllSuppliers(true); // Pass true to bypass cache if implemented
+    setSuppliers(updatedSuppliers);
+  };
 
   return (
     <>
@@ -30,7 +39,7 @@ export function SuppliersClient({ suppliersData }: SuppliersClientProps) {
       <div className="p-10 w-full">
         <DataTable
           columns={supplierColumns}
-          data={suppliersData}
+          data={suppliers}
           properties={{
             isSearchable: true,
             showColumnChooser: true,
@@ -44,6 +53,7 @@ export function SuppliersClient({ suppliersData }: SuppliersClientProps) {
       <AddSupplierDialog
         open={isAddSupplierOpen}
         onOpenChange={setIsAddSupplierOpen}
+        onSuccess={refreshSuppliersData}
       />
     </>
   );

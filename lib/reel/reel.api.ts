@@ -43,21 +43,3 @@ export async function addReel(reelData: Omit<CreateReelRequest, "id">): Promise<
 
   return data;
 }
-
-
-export function handleBusinessError(err: any, setError: any) {
-  const field = err?.field;
-  const message = err?.message;
-
-  // ✅ field-level error
-  if (field) {
-    setError(field, {
-      type: "server",
-      message,
-    });
-    return;
-  }
-
-  // fallback
-  alert(message || "Something went wrong");
-}

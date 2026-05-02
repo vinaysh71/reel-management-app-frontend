@@ -23,13 +23,9 @@ import {
 } from "@/components/ui/select";
 import { Supplier } from "@/lib/supplier/supplier.types";
 import { stat } from "fs";
-import {
-  addReel,
-  getReelsData,
-  handleBusinessError,
-} from "@/lib/reel/reel.api";
+import { addReel, getReelsData } from "@/lib/reel/reel.api";
 import { CreateReelRequest } from "@/lib/reel/reel.types";
-import { get } from "http";
+import { handleBusinessError } from "@/lib/utils";
 
 /* ------------------ SCHEMA ------------------ */
 const reelSchema = z.object({
@@ -79,7 +75,6 @@ export function AddReelDialog({
   });
 
   const onSubmit = async (data: ReelForm) => {
-    console.log("Form Data:", data);
     const payload: CreateReelRequest = {
       reelNo: data.reelNo,
       supplierId: Number(data.supplier),
@@ -116,7 +111,7 @@ export function AddReelDialog({
             {/* Reel Number */}
             <div className="grid grid-cols-4 items-start gap-4">
               <Label htmlFor="reelNo" className="text-right">
-                Reel Number
+                Reel Number*
               </Label>
 
               <div className="col-span-3 space-y-1">
@@ -137,7 +132,7 @@ export function AddReelDialog({
             {/* Supplier */}
             <div className="grid grid-cols-4 items-start gap-4">
               <Label htmlFor="supplier" className="text-right">
-                Supplier
+                Supplier*
               </Label>
 
               <div className="col-span-3 space-y-1">
@@ -208,7 +203,7 @@ export function AddReelDialog({
             {/* Status */}
             <div className="grid grid-cols-4 items-start gap-4">
               <Label htmlFor="status" className="text-right">
-                Status
+                Status*
               </Label>
 
               <div className="col-span-3 space-y-1">
@@ -246,7 +241,7 @@ export function AddReelDialog({
             {/* Gross Wt (kg) */}
             <div className="grid grid-cols-4 items-start gap-4">
               <Label htmlFor="grossWt" className="text-right">
-                Gross Wt (kg)
+                Gross Wt (kg)*
               </Label>
 
               <div className="col-span-3 space-y-1">
@@ -268,7 +263,7 @@ export function AddReelDialog({
             {/* Net Wt (kg) */}
             <div className="grid grid-cols-4 items-start gap-4">
               <Label htmlFor="netWt" className="text-right">
-                Net Wt (kg)
+                Net Wt (kg)*
               </Label>
               <div className="col-span-3 space-y-1">
                 <Input

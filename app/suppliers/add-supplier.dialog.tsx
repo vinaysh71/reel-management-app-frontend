@@ -9,11 +9,12 @@ import {
   DialogHeader,
   DialogTitle,
   DialogFooter,
-  DialogTrigger,
 } from "@/components/ui/dialog"; // [web:6]
 import { Input } from "@/components/ui/input"; // [web:8]
 import { Label } from "@/components/ui/label"; // [web:6]
 import { z } from "zod"; // [web:6]
+import { handleBusinessError } from "@/lib/utils";
+import { addSupplier } from "@/lib/supplier/supplier.api";
 
 /* ------------------ SCHEMA ------------------ */
 const supplierSchema = z.object({
@@ -41,16 +42,19 @@ type SupplierForm = z.infer<typeof supplierSchema>;
 interface AddSupplierDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  onSuccess: () => void; // Callback to refresh data after successful addition
 }
 
 export function AddSupplierDialog({
   open,
   onOpenChange,
+  onSuccess,
 }: AddSupplierDialogProps) {
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
+    setError,
     reset,
   } = useForm<SupplierForm>({
     resolver: zodResolver(supplierSchema),
@@ -63,12 +67,23 @@ export function AddSupplierDialog({
   });
 
   const onSubmit = async (data: SupplierForm) => {
-    console.log("FORM DATA:", data);
-
+    const payload = {
+      name: data.supplierName,
+      contact: {
+        phone: data.contactPhone,
+        email: data.contactEmail,
+      },
+      gstIn: data.gstIn,
+    };
     // 👉 call your API here
-
-    reset(); // clear form
-    onOpenChange(false); // close dialog
+    try {
+      await addSupplier(payload);
+      reset(); // clear form
+      onOpenChange(false); // close dialog
+      onSuccess(); // refresh suppliers data
+    } catch (error) {
+      handleBusinessError(error, setError);
+    }
   };
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -85,7 +100,7 @@ export function AddSupplierDialog({
           <div className="grid gap-4 py-4">
             {/* Supplier Name */}
             <div className="grid grid-cols-4 items-start gap-4">
-              <Label className="text-right mt-2">Supplier Name</Label>
+              <Label className="text-right mt-2">Supplier Name*</Label>
 
               <div className="col-span-3 space-y-1">
                 <Input
@@ -105,7 +120,7 @@ export function AddSupplierDialog({
             {/* Contact Phone */}
             <div className="grid grid-cols-4 items-start gap-4">
               <Label htmlFor="contactPhone" className="text-right">
-                Contact Phone
+                Contact Phone*
               </Label>
 
               <div className="col-span-3 space-y-1">
