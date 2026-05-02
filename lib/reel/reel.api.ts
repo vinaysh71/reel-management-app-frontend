@@ -1,11 +1,14 @@
-import { Reel } from "./reel.types";
+import { CreateReelRequest, Reel } from "./reel.types";
 
 let cachedData: Reel[] | null = null;
-export async function getReelsData(): Promise<Reel[]> {
-  if (cachedData) {
+export async function getReelsData(clearCache = false): Promise<Reel[]> {
+  if (cachedData && !clearCache) {
     return cachedData;
   }
-  const url = `${process.env.BASE_URL}/reels`;
+  if (clearCache) {
+    cachedData = null;
+  }
+  const url = `${process.env.NEXT_PUBLIC_BASE_URL}/reels`;
 
   const res = await fetch(url, {
     cache: "no-store",
@@ -17,4 +20,44 @@ export async function getReelsData(): Promise<Reel[]> {
   const data = await res.json();
   cachedData = data;
   return data;
+}
+
+export async function addReel(reelData: Omit<CreateReelRequest, "id">): Promise<Reel> {
+  const url = `${process.env.NEXT_PUBLIC_BASE_URL}/reels`;
+
+  const res = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(reelData),
+  });
+
+   const data = await res.json();
+  if (!res.ok) {
+    throw {
+      ...data,
+      status: res.status,
+    }
+  }
+
+  return data;
+}
+
+
+export function handleBusinessError(err: any, setError: any) {
+  const field = err?.field;
+  const message = err?.message;
+
+  // ✅ field-level error
+  if (field) {
+    setError(field, {
+      type: "server",
+      message,
+    });
+    return;
+  }
+
+  // fallback
+  alert(message || "Something went wrong");
 }

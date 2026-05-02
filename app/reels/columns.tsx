@@ -40,11 +40,12 @@ export const reelsColumns: ColumnDef<ReelColumns>[] = [
   {
     accessorKey: "gsm",
     header: "GSM",
-    cell: ({ row }) => <span>{row.getValue("gsm")} </span>,
+    cell: ({ row }) => <span>{row.getValue("gsm") || "-"} </span>,
   },
   {
     accessorKey: "ply",
     header: "Ply",
+    cell: ({ row }) => <span>{row.getValue("ply") || "-"} </span>,
   },
   {
     accessorKey: "grossWeight",

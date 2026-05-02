@@ -1,5 +1,5 @@
 "use client";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,12 +13,33 @@ import {
 import { Input } from "@/components/ui/input"; // [web:8]
 import { Label } from "@/components/ui/label"; // [web:6]
 import z from "zod";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Supplier } from "@/lib/supplier/supplier.types";
+import { stat } from "fs";
+import {
+  addReel,
+  getReelsData,
+  handleBusinessError,
+} from "@/lib/reel/reel.api";
+import { CreateReelRequest } from "@/lib/reel/reel.types";
+import { get } from "http";
 
 /* ------------------ SCHEMA ------------------ */
 const reelSchema = z.object({
-  reelNumber: z.string().min(1, "Reel number is required"),
+  reelNo: z.string().min(1, "Reel number is required"),
   supplier: z.string().min(1, "Supplier is required"),
+  gsm: z.string().optional().or(z.literal("")),
   ply: z.string().optional().or(z.literal("")),
+  status: z.enum(["Available", "In Use", "Consumed", "Damaged"] as const, {
+    message: "Status is required",
+  }),
   grossWeight: z.string().min(1, "Gross weight must be greater than 0"),
   netWeight: z.string().min(1, "Net weight must be greater than 0"),
 });
@@ -28,32 +49,56 @@ type ReelForm = z.infer<typeof reelSchema>;
 interface AddReelDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  supplierList: Supplier[];
+  onSuccess: () => void; // Callback to refresh data after successful addition
 }
 
-export function AddReelDialog({ open, onOpenChange }: AddReelDialogProps) {
+export function AddReelDialog({
+  open,
+  onOpenChange,
+  supplierList,
+  onSuccess,
+}: AddReelDialogProps) {
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
+    setError,
     reset,
+    control,
   } = useForm<ReelForm>({
     resolver: zodResolver(reelSchema),
     defaultValues: {
-      reelNumber: "",
+      reelNo: "",
       supplier: "",
-      ply: undefined,
-      grossWeight: undefined,
-      netWeight: undefined,
+      gsm: "",
+      ply: "",
+      grossWeight: "",
+      netWeight: "",
     },
   });
 
   const onSubmit = async (data: ReelForm) => {
     console.log("Form Data:", data);
-
+    const payload: CreateReelRequest = {
+      reelNo: data.reelNo,
+      supplierId: Number(data.supplier),
+      gsm: data.gsm ? Number(data.gsm) : undefined,
+      ply: data.ply ? Number(data.ply) : undefined,
+      grossWeight: Number(data.grossWeight),
+      netWeight: Number(data.netWeight),
+      status: data.status,
+    };
     // 👉 call your API here
-
-    reset();
-    onOpenChange(false);
+    try {
+      await addReel(payload);
+      await getReelsData(true);
+      reset();
+      onOpenChange(false);
+      onSuccess();
+    } catch (err) {
+      handleBusinessError(err, setError);
+    }
   };
 
   return (
@@ -70,43 +115,77 @@ export function AddReelDialog({ open, onOpenChange }: AddReelDialogProps) {
           <div className="grid gap-4 py-4">
             {/* Reel Number */}
             <div className="grid grid-cols-4 items-start gap-4">
-              <Label htmlFor="reelNumber" className="text-right">
+              <Label htmlFor="reelNo" className="text-right">
                 Reel Number
               </Label>
 
               <div className="col-span-3 space-y-1">
                 <Input
-                  id="reelNumber"
+                  id="reelNo"
                   placeholder="e.g., R001234"
                   className="col-span-3"
-                  {...register("reelNumber")}
+                  {...register("reelNo")}
                 />
-                {errors.reelNumber && (
+                {errors.reelNo && (
                   <p className="text-red-500 text-xs mt-1">
-                    {errors.reelNumber.message}
+                    {errors.reelNo.message}
                   </p>
                 )}
               </div>
             </div>
 
-            {/* Supplier (input instead of select) */}
+            {/* Supplier */}
             <div className="grid grid-cols-4 items-start gap-4">
               <Label htmlFor="supplier" className="text-right">
                 Supplier
               </Label>
 
               <div className="col-span-3 space-y-1">
-                <Input
-                  id="supplier"
-                  placeholder="Enter supplier"
-                  className="col-span-3"
-                  {...register("supplier")}
+                {/* TODO: Fetch suppliers from API instead of using hardcoded values */}
+                <Controller
+                  name="supplier"
+                  control={control}
+                  render={({ field }) => (
+                    <Select onValueChange={field.onChange} value={field.value}>
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Select Supplier" />
+                      </SelectTrigger>
+
+                      <SelectContent>
+                        <SelectGroup>
+                          {supplierList.map((supplier) => (
+                            <SelectItem
+                              key={supplier.id}
+                              value={String(supplier.id)}
+                            >
+                              {supplier.name}
+                            </SelectItem>
+                          ))}
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                  )}
                 />
                 {errors.supplier && (
                   <p className="text-red-500 text-xs mt-1">
                     {errors.supplier.message}
                   </p>
                 )}
+              </div>
+            </div>
+
+            {/* GSM */}
+            <div className="grid grid-cols-4 items-start gap-4">
+              <Label htmlFor="gsm" className="text-right">
+                Gsm
+              </Label>
+              <div className="col-span-3 space-y-1">
+                <Input
+                  id="gsm"
+                  placeholder="e.g., 150"
+                  className="col-span-3"
+                  {...register("gsm")}
+                />
               </div>
             </div>
 
@@ -123,6 +202,44 @@ export function AddReelDialog({ open, onOpenChange }: AddReelDialogProps) {
                   className="col-span-3"
                   {...register("ply")}
                 />
+              </div>
+            </div>
+
+            {/* Status */}
+            <div className="grid grid-cols-4 items-start gap-4">
+              <Label htmlFor="status" className="text-right">
+                Status
+              </Label>
+
+              <div className="col-span-3 space-y-1">
+                <Controller
+                  name="status"
+                  control={control}
+                  render={({ field }) => (
+                    <Select onValueChange={field.onChange} value={field.value}>
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Select Status" />
+                      </SelectTrigger>
+
+                      <SelectContent>
+                        <SelectGroup>
+                          {["Available", "In Use", "Consumed", "Damaged"].map(
+                            (status) => (
+                              <SelectItem key={status} value={status}>
+                                {status}
+                              </SelectItem>
+                            ),
+                          )}
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                  )}
+                />
+                {errors.status && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.status.message}
+                  </p>
+                )}
               </div>
             </div>
 

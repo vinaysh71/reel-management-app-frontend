@@ -6,7 +6,7 @@ export async function getAllSuppliers(): Promise<Supplier[]> {
     if (cachedSuppliers) {
         return cachedSuppliers;
     }
-    const url = `${process.env.BASE_URL}/suppliers`;
+    const url = `${process.env.NEXT_PUBLIC_BASE_URL}/suppliers`;
 
     const res = await fetch(url, {
         cache: "no-store",

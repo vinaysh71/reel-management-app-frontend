@@ -16,3 +16,13 @@ export type Reel = {
   location: string;
   notes?: string;
 };
+
+export type CreateReelRequest = {
+  reelNo: string;
+  supplierId: number;
+  gsm?: number;
+  ply?: number;
+  grossWeight: number;
+  netWeight: number;
+  status: "Available" | "In Use" | "Consumed" | "Damaged";
+};
