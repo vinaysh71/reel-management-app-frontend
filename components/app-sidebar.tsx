@@ -1,7 +1,3 @@
-import * as React from "react"
-
-import { SearchForm } from "@/components/search-form"
-import { VersionSwitcher } from "@/components/version-switcher"
 import {
   Sidebar,
   SidebarContent,
@@ -13,8 +9,16 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
-} from "@/components/ui/sidebar"
-import { FileStack, Layers, LayoutDashboard, Package, Settings } from "lucide-react"
+} from "@/components/ui/sidebar";
+import {
+  Building2,
+  FileStack,
+  Layers,
+  LayoutDashboard,
+  Package,
+  Settings,
+} from "lucide-react";
+import { AppSidebarLink } from "./app-sidebar-link";
 
 // Menu items.
 const items = [
@@ -27,6 +31,11 @@ const items = [
     title: "Reels",
     url: "/reels",
     icon: Layers,
+  },
+  {
+    title: "Suppliers",
+    url: "/suppliers",
+    icon: Building2,
   },
   {
     title: "Orders",
@@ -43,7 +52,7 @@ const items = [
     url: "#",
     icon: Settings,
   },
-] 
+];
 
 export function AppSidebar() {
   return (
@@ -54,19 +63,17 @@ export function AppSidebar() {
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <a href={item.url}>
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
+                <AppSidebarLink
+                  key={item.title}
+                  href={item.url}
+                  label={item.title}
+                  icon={item.icon}
+                />
               ))}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
     </Sidebar>
-  )
+  );
 }
