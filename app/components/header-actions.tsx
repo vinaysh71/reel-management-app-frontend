@@ -1,10 +1,11 @@
 // components/header-actions.tsx
 "use client";
 
-import { Bell, Moon, Sun } from "lucide-react";
+import { Bell, LogOut, Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
+import { useRouter } from "next/navigation";
 
 export function HeaderActions() {
   const { theme, resolvedTheme, setTheme } = useTheme();
@@ -13,13 +14,15 @@ export function HeaderActions() {
   // Avoid mismatch between server and client
   useEffect(() => setMounted(true), []);
 
-  if (!mounted) return null;
-
   const isDark = resolvedTheme === "dark";
 
   const toggleTheme = () => {
     setTheme(isDark ? "light" : "dark");
   };
+
+  const router = useRouter();
+
+  if (!mounted) return null;
 
   return (
     <div className="flex items-center gap-3">
@@ -44,6 +47,15 @@ export function HeaderActions() {
         aria-label="Notifications"
       >
         <Bell className="h-4 w-4" />
+      </Button>
+
+      <Button
+        variant="ghost"
+        size="icon"
+        className="text-muted-foreground"
+        onClick={() => router.push("/login")}
+      >
+        <LogOut className="h-4 w-4" />
       </Button>
     </div>
   );
