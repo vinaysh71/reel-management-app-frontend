@@ -2,9 +2,9 @@
 "use client";
 
 import { useState } from "react";
-import PageHeader from "../components/page-header";
-import { DataTable } from "../components/data-table";
-import { HeaderActions } from "../components/header-actions";
+import PageHeader from "../../components/page-header";
+import { DataTable } from "../../components/data-table";
+import { HeaderActions } from "../../components/header-actions";
 import { AddReelDialog } from "./add-reel-dialog";
 import { reelsColumns } from "./columns";
 import { Reel } from "@/lib/reel/reel.types";

@@ -39,7 +39,7 @@ export const reelsColumns: ColumnDef<ReelColumns>[] = [
   },
   {
     accessorKey: "gsm",
-    header: "GSM",
+    header: "Gsm",
     cell: ({ row }) => <span>{row.getValue("gsm") || "-"} </span>,
   },
   {

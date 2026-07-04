@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { ReactNode } from "react";
 import { cn } from "@/lib/utils";
@@ -40,7 +40,6 @@ export default function PageHeader({
         </div>
 
         <div className="flex items-center gap-2 px-6">
-          {children}
           {primaryAction ? (
             primaryAction.href ? (
               <Button asChild>
@@ -52,6 +51,7 @@ export default function PageHeader({
               </Button>
             )
           ) : null}
+          {children}
         </div>
       </div>
 

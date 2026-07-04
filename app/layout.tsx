@@ -7,12 +7,8 @@ import { ThemeProvider } from "./components/theme-provider";
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
-    <body>
-      <ThemeProvider>
-      <Sidebar>
-        {children}
-      </Sidebar>
-      </ThemeProvider>
+      <body>
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   );

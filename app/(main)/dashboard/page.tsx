@@ -1,11 +1,11 @@
-import PageHeader from "../components/page-header";
+import PageHeader from "../../components/page-header";
 import { Layers, Activity, TrendingUp, TriangleAlert } from "lucide-react";
-import { HeaderActions } from "../components/header-actions";
-import DashboardStats from "../components/dashboard/dashboard-stats";
+import { HeaderActions } from "../../components/header-actions";
+import DashboardStats from "../../components/dashboard/dashboard-stats";
 import { Suspense } from "react";
-import ConsumptionTable from "../components/dashboard/consumption-table";
-import LowStockCard from "../components/dashboard/low-stock.card";
-import { DashboardSkeleton } from "../components/dashboard/dashboard-skeleton";
+import ConsumptionTable from "../../components/dashboard/consumption-table";
+import LowStockCard from "../../components/dashboard/low-stock.card";
+import { DashboardSkeleton } from "../../components/dashboard/dashboard-skeleton";
 
 export default async function Page() {
   return (

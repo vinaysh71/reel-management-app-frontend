@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import PageHeader from "../components/page-header";
-import { HeaderActions } from "../components/header-actions";
-import { DataTable } from "../components/data-table";
+import PageHeader from "../../components/page-header";
+import { HeaderActions } from "../../components/header-actions";
+import { DataTable } from "../../components/data-table";
 import { supplierColumns } from "./columns";
 import { Supplier } from "@/lib/supplier/supplier.types";
 import { AddSupplierDialog } from "./add-supplier.dialog";
