@@ -1,35 +1,22 @@
-import NextAuth from "next-auth";
+import { authOptions } from "@/lib/auth";
+import NextAuth, { DefaultSession } from "next-auth";
 
-const handler = NextAuth({
-  providers: [
-    {
-      id: "zitadel",
-      name: "ZITADEL",
-      type: "oauth",
+declare module "next-auth" {
+  interface Session {
+    accessToken?: string;
+    idToken?: string;
+    user: DefaultSession["user"];
+  }
+}
 
-      issuer: process.env.ZITADEL_ISSUER,
-      clientId: process.env.ZITADEL_CLIENT_ID,
+declare module "next-auth/jwt" {
+  interface JWT {
+    accessToken?: string;
+    idToken?: string;
+  }
+}
 
-      wellKnown: `${process.env.ZITADEL_ISSUER}/.well-known/openid-configuration`,
 
-      authorization: {
-        params: {
-          scope: "openid profile email",
-        },
-      },
-
-      checks: ["pkce", "state"],
-
-      profile(profile) {
-        return {
-          id: profile.sub,
-          name: profile.name,
-          email: profile.email,
-          image: profile.picture,
-        };
-      },
-    },
-  ],
-});
+const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };
