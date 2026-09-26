@@ -1,3 +1,4 @@
+import { api } from "@/lib/core/api";
 import { DashboardData } from "./dashboard.types";
 
 let cachedData: DashboardData | null = null;
@@ -6,15 +7,10 @@ export async function getDashboardData(): Promise<DashboardData> {
   if (cachedData) {
     return cachedData;
   }
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/dashboardData`, {
-    cache: "no-store",
-  });
-  if (!res.ok) {
-    throw new Error("Failed to fetch dashboard data");
-  }
-  const data = await res.json();
-  cachedData = data;
-  return data;
+  const res = await api.get<DashboardData>(`/dashboardData`);
+  console.log("FETCHING DASHBOARD DATA:", JSON.stringify(res));
+  cachedData = res;
+  return res;
 }
 
 export async function getDashboardKpis() {

@@ -3,12 +3,15 @@ import "./globals.css";
 import { ReactNode } from "react";
 import Sidebar from "./components/side-bar";
 import { ThemeProvider } from "./components/theme-provider";
+import Providers from "./providers";
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body>
-        <ThemeProvider>{children}</ThemeProvider>
+        <Providers>
+          <ThemeProvider>{children}</ThemeProvider>
+        </Providers>
       </body>
     </html>
   );

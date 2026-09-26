@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 import { useRouter } from "next/navigation";
+import { signOut } from "next-auth/react";
 
 export function HeaderActions() {
   const { theme, resolvedTheme, setTheme } = useTheme();
@@ -53,7 +54,11 @@ export function HeaderActions() {
         variant="ghost"
         size="icon"
         className="text-muted-foreground"
-        onClick={() => router.push("/login")}
+        onClick={() =>
+          signOut({
+            callbackUrl: "/login",
+          })
+        }
       >
         <LogOut className="h-4 w-4" />
       </Button>
