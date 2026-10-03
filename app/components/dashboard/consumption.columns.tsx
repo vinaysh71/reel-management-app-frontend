@@ -1,7 +1,7 @@
-import { ConsumptionEntry } from "@/lib/dashboard/dashboard.types";
+import { UsageLog } from "@/lib/dashboard/dashboard.types";
 import { ColumnDef } from "@tanstack/react-table";
 
-export const consumptionColumns: ColumnDef<ConsumptionEntry>[] = [
+export const consumptionColumns: ColumnDef<UsageLog>[] = [
   {
     accessorKey: "date",
     header: "Date",

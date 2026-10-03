@@ -28,11 +28,3 @@ export type DashboardKpis = {
     lowStock: number;
     wastagePercent: number;
 };
-
-export type ConsumptionEntry = {
-  date: string;
-  reelNo: string;
-  orderNo: string;
-  qtyUsed: string;
-  operator: string;
-};

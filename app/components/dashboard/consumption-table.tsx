@@ -1,7 +1,6 @@
 import { Card, CardTitle } from "@/components/ui/card";
 import { DataTable } from "../data-table";
 import { consumptionColumns } from "./consumption.columns";
-import { ConsumptionEntry } from "@/lib/dashboard/dashboard.types";
 import { getRecentConsumption } from "@/lib/dashboard/dashboard.api";
 
 export default async function ConsumptionTable() {
