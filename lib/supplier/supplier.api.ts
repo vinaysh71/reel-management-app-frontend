@@ -18,7 +18,5 @@ export async function getAllSuppliers(clearCache = false): Promise<Supplier[]> {
 }
 
 export async function addSupplier(supplierData: Omit<CreateSupplierRequest, "id">): Promise<Supplier> {
-    const url = `${process.env.NEXT_PUBLIC_BASE_URL}/suppliers`;
-
-    return await api.post<Supplier>("/suppliers", JSON.stringify(supplierData))
+    return await api.post<Supplier>("/suppliers", supplierData)
 }

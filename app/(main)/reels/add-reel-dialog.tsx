@@ -8,7 +8,6 @@ import {
   DialogHeader,
   DialogTitle,
   DialogFooter,
-  DialogTrigger,
 } from "@/components/ui/dialog"; // [web:6]
 import { Input } from "@/components/ui/input"; // [web:8]
 import { Label } from "@/components/ui/label"; // [web:6]
@@ -22,8 +21,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Supplier } from "@/lib/supplier/supplier.types";
-import { stat } from "fs";
-import { addReel, getReelsData } from "@/lib/reel/reel.api";
+import { createReelAction } from "@/lib/reel/reel.actions";
 import { CreateReelRequest } from "@/lib/reel/reel.types";
 import { handleBusinessError } from "@/lib/utils";
 
@@ -86,8 +84,11 @@ export function AddReelDialog({
     };
     // 👉 call your API here
     try {
-      await addReel(payload);
-      await getReelsData(true);
+      const result = await createReelAction(payload);
+      if (!result.ok) {
+        handleBusinessError(result.error, setError);
+        return;
+      }
       reset();
       onOpenChange(false);
       onSuccess();

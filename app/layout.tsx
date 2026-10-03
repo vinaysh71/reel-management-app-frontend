@@ -1,7 +1,6 @@
 // app/layout.tsx
 import "./globals.css";
 import { ReactNode } from "react";
-import Sidebar from "./components/side-bar";
 import { ThemeProvider } from "./components/theme-provider";
 import Providers from "./providers";
 

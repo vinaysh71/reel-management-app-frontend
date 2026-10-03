@@ -14,7 +14,7 @@ import { Input } from "@/components/ui/input"; // [web:8]
 import { Label } from "@/components/ui/label"; // [web:6]
 import { z } from "zod"; // [web:6]
 import { handleBusinessError } from "@/lib/utils";
-import { addSupplier } from "@/lib/supplier/supplier.api";
+import { createSupplierAction } from "@/lib/supplier/supplier.actions";
 
 /* ------------------ SCHEMA ------------------ */
 const supplierSchema = z.object({
@@ -77,7 +77,11 @@ export function AddSupplierDialog({
     };
     // 👉 call your API here
     try {
-      await addSupplier(payload);
+      const result = await createSupplierAction(payload);
+      if (!result.ok) {
+        handleBusinessError(result.error, setError);
+        return;
+      }
       reset(); // clear form
       onOpenChange(false); // close dialog
       onSuccess(); // refresh suppliers data
