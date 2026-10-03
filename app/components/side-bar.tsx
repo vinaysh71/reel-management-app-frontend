@@ -1,7 +1,7 @@
 // app/components/Sidebar.tsx
 "use client"
 import { AppSidebar } from '@/components/app-sidebar'
-import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
+import { SidebarProvider } from '@/components/ui/sidebar'
 import React from 'react'
 
 export default function Sidebar({ children }: { children: React.ReactNode }) {

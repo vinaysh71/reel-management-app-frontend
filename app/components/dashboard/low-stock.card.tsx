@@ -1,6 +1,6 @@
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { getLowStocks } from "@/lib/dashboard/dashboard.api";
-import { Badge } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 
 export default async function LowStockCard() {
   const data = await getLowStocks();

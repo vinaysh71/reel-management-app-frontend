@@ -8,7 +8,6 @@ export async function getDashboardData(): Promise<DashboardData> {
     return cachedData;
   }
   const res = await api.get<DashboardData>(`/dashboardData`);
-  console.log("FETCHING DASHBOARD DATA:", JSON.stringify(res));
   cachedData = res;
   return res;
 }

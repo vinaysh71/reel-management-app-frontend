@@ -1,10 +1,7 @@
 import { buildDashboardStats } from "@/lib/dashboard/buildDashboardStats";
 
 import { StatCard } from "../stat-card";
-import {
-  getDashboardData,
-  getDashboardKpis,
-} from "@/lib/dashboard/dashboard.api";
+import { getDashboardKpis } from "@/lib/dashboard/dashboard.api";
 
 export default async function DashboardStats() {
   const data = await getDashboardKpis();

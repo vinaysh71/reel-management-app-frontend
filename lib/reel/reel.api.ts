@@ -17,6 +17,5 @@ export async function getReelsData(clearCache = false): Promise<Reel[]> {
 }
 
 export async function addReel(reelData: Omit<CreateReelRequest, "id">): Promise<Reel> {
-
-    return await api.post<Reel>("/reels", JSON.stringify(reelData));
+    return await api.post<Reel>("/reels", reelData);
 }

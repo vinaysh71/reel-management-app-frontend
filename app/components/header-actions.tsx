@@ -5,7 +5,6 @@ import { Bell, LogOut, Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useSyncExternalStore } from "react";
 import { useTheme } from "next-themes";
-import { useRouter } from "next/navigation";
 import { signOut } from "next-auth/react";
 
 export function HeaderActions() {
@@ -22,8 +21,6 @@ export function HeaderActions() {
   const toggleTheme = () => {
     setTheme(isDark ? "light" : "dark");
   };
-
-  const router = useRouter();
 
   if (!mounted) return null;
 
